@@ -44,7 +44,7 @@ class GameScene: SKScene {
         // Create player
         let playerTexture = GameManager.sharedInstance.atlas.textureNamed("player")
         self.playerNode = SKSpriteNode(texture: playerTexture)
-        self.playerNode.color = UIColor.redColor()
+        self.playerNode.color = GameManager.Color.Red
         self.playerNode.colorBlendFactor = 1
         self.playerNode.setScale(1 / UIScreen.mainScreen().scale)
         self.playerNode.position = CGPoint(x: view.center.x, y: (self.leftWallNode.position.y - self.leftWallNode.size.height) + (self.playerNode.size.height / 2))
@@ -55,7 +55,7 @@ class GameScene: SKScene {
         let ballTexture = GameManager.sharedInstance.atlas.textureNamed("ball")
         let ballWidth = ballTexture.size().width / UIScreen.mainScreen().scale
         let ballSize = CGSize(width: ballWidth, height: ballWidth)
-        self.ballNode = BallNode(texture: GameManager.sharedInstance.atlas.textureNamed("ball"), color: UIColor.cyanColor(), size: ballSize)
+        self.ballNode = BallNode(texture: GameManager.sharedInstance.atlas.textureNamed("ball"), color: GameManager.Color.Yellow, size: ballSize)
         self.ballNode.colorBlendFactor = 1
         self.ballNode.position = view.center
         self.ballNode.position.y += 35
@@ -115,6 +115,11 @@ class GameScene: SKScene {
         
     }
     
+    /////////////////////////////////////////////////////////
+    //
+    // MARK: GAME LOOP
+    //
+
     override func update(currentTime: NSTimeInterval) {
 
         // Initialize _lastUpdateTime if it has not already been
@@ -291,6 +296,11 @@ class GameScene: SKScene {
         
     }
     
+    /////////////////////////////////////////////////////////
+    //
+    // MARK: SETUP FUNCTIONS
+    //
+    
     func resetBallAndStart() {
         
         self.ballNode.enabled = false
@@ -328,7 +338,7 @@ class GameScene: SKScene {
         let y:CGFloat = self.view!.frame.height - brickHeight * CGFloat(GameManager.sharedInstance.brickRows / 2)
         
         self.leftWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("sideWall"))
-        self.leftWallNode.color = UIColor.grayColor()
+        self.leftWallNode.color = GameManager.Color.LightGray
         self.leftWallNode.colorBlendFactor = 1
         self.leftWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.leftWallNode.anchorPoint = CGPoint(x: 0, y: 1)
@@ -337,7 +347,7 @@ class GameScene: SKScene {
         addChild(self.leftWallNode)
         
         self.rightWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("sideWall"))
-        self.rightWallNode.color = UIColor.grayColor()
+        self.rightWallNode.color = GameManager.Color.LightGray
         self.rightWallNode.colorBlendFactor = 1
         self.rightWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.rightWallNode.anchorPoint = CGPoint(x: 1, y: 1)
@@ -346,7 +356,7 @@ class GameScene: SKScene {
         addChild(self.rightWallNode)
         
         self.topWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("topWall"))
-        self.topWallNode.color = UIColor.grayColor()
+        self.topWallNode.color = GameManager.Color.LightGray
         self.topWallNode.colorBlendFactor = 1
         self.topWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.topWallNode.anchorPoint = CGPoint(x: 0, y: 1)
@@ -358,6 +368,8 @@ class GameScene: SKScene {
     
     func createPlaceBricks() {
         
+        
+        // cleanup any brick nodes left
         self.enumerateChildNodesWithName("brick", usingBlock: {
             
             node, stop in
@@ -368,6 +380,7 @@ class GameScene: SKScene {
 
         self.brickNodes = [BrickNode]()
         
+        // layout brick nodes
         let brickWidth = GameManager.sharedInstance.atlas.textureNamed("brick").size().width / UIScreen.mainScreen().scale
         let brickHeight = GameManager.sharedInstance.atlas.textureNamed("brick").size().height / UIScreen.mainScreen().scale
         
@@ -384,32 +397,32 @@ class GameScene: SKScene {
                 switch i {
                 case 1:
 
-                    brick.brickData = BrickData(points: 1, brickRow: .One, color: UIColor.blueColor(), collectable: false)
+                    brick.brickData = BrickData(points: 1, brickRow: .One, color: GameManager.Color.Purple, collectable: false)
 
                     break
                 case 2:
                     
-                    brick.brickData = BrickData(points: 1, brickRow: .Two, color: UIColor.greenColor(), collectable: false)
+                    brick.brickData = BrickData(points: 1, brickRow: .Two, color: GameManager.Color.Blue, collectable: false)
 
                     break
                 case 3:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Three, color: UIColor.yellowColor(), collectable: false)
+                    brick.brickData = BrickData(points: 4, brickRow: .Three, color: GameManager.Color.Green, collectable: false)
                     
                     break
                 case 4:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Four, color: UIColor.brownColor(), collectable: false)
+                    brick.brickData = BrickData(points: 4, brickRow: .Four, color: GameManager.Color.Yellow, collectable: false)
                     
                     break
                 case 5:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Five, color: UIColor.orangeColor(), collectable: false)
+                    brick.brickData = BrickData(points: 7, brickRow: .Five, color: GameManager.Color.Orange, collectable: false)
                     
                     break
                 case 6:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Six, color: UIColor.redColor(), collectable: false)
+                    brick.brickData = BrickData(points: 7, brickRow: .Six, color: GameManager.Color.Red, collectable: false)
                     
                     break
                 default:

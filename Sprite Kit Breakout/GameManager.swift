@@ -86,7 +86,7 @@ class GameManager {
         textures["player"]?.filteringMode = .Nearest
         
         // Create texture for ball
-        let tempBallNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth / 4, height: brickWidth / 4))
+        let tempBallNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth / 2, height: brickWidth / 2))
         tempBallNode.antialiased = false
         tempBallNode.fillColor = UIColor.whiteColor()
         tempBallNode.strokeColor = UIColor.clearColor()
@@ -104,6 +104,19 @@ class GameManager {
         }
         
         self.atlas = SKTextureAtlas(dictionary: images)
+        
+    }
+    
+    struct Color {
+        
+        static let Blue = UIColor(red: 41/255, green: 173/255, blue: 255/255, alpha: 1)
+        static let Green = UIColor(red: 0/255, green: 228/255, blue: 54/255, alpha: 1)
+        static let Yellow = UIColor(red: 255/255, green: 236/255, blue: 39/255, alpha: 1)
+        static let Orange = UIColor(red: 255/255, green: 136/255, blue: 0/255, alpha: 1)
+        static let Red = UIColor(red: 255/255, green: 0/255, blue: 77/255, alpha: 1)
+        static let Pink = UIColor(red: 255/255, green: 119/255, blue: 168/255, alpha: 1)
+        static let LightGray = UIColor(red: 194/255, green: 195/255, blue: 199/255, alpha: 1)
+        static let Purple = UIColor(red: 131/255, green: 118/255, blue: 156/255, alpha: 1)
         
     }
     
