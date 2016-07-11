@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import GameplayKit
 
 enum GameState {
     case MainMenu,InGame,GameOver
@@ -35,6 +36,11 @@ class GameScene: SKScene {
         
         self.backgroundColor = UIColor.blackColor()
         
+//        for name in UIFont.familyNames() {
+//            print(name)
+//            print(UIFont.fontNamesForFamilyName(name))
+//        }
+        
         // Create playing field
         createPlayingField()
         
@@ -61,22 +67,24 @@ class GameScene: SKScene {
         self.ballNode.position.y += 35
         self.ballNode.setScale(1 / UIScreen.mainScreen().scale)
         self.ballNode.move = vector2(0, -1)
-        self.ballNode.moveSpeed = 200
+        self.ballNode.moveSpeed = 250
         self.ballNode.zPosition = GameManager.sharedInstance.ballZ
         addChild(self.ballNode)
         
         // score label
-        self.scoreLabel = SKLabelNode(fontNamed: "AppleSDGothicNeo-Bold")
+        self.scoreLabel = SKLabelNode(fontNamed: "PhaserBank")
         self.scoreLabel.fontSize = 18
-        self.scoreLabel.text = "0000"
+        self.scoreLabel.fontColor = GameManager.Color.LightGray
+        self.scoreLabel.text = "0"
         self.scoreLabel.horizontalAlignmentMode = .Left
         self.scoreLabel.verticalAlignmentMode = .Top
         self.scoreLabel.position = CGPoint(x: 12, y: self.view!.frame.height - 10)
         addChild(self.scoreLabel)
         
         // lives label
-        self.livesLabel = SKLabelNode(fontNamed: "AppleSDGothicNeo-Bold")
+        self.livesLabel = SKLabelNode(fontNamed: "PhaserBank")
         self.livesLabel.fontSize = 18
+        self.livesLabel.fontColor = GameManager.Color.LightGray
         self.livesLabel.text = "3"
         self.livesLabel.horizontalAlignmentMode = .Right
         self.livesLabel.verticalAlignmentMode = .Top

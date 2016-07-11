@@ -7,7 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		471476C81D2F38C6006D8E0E /* ball_bounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 471476C71D2F38C6006D8E0E /* ball_bounce.wav */; };
+		471DBA0F1D33E6B000A8918A /* ball_bounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA0E1D33E6B000A8918A /* ball_bounce.wav */; };
+		471DBA111D33E85100A8918A /* phaserbank.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA101D33E85100A8918A /* phaserbank.ttf */; };
 		474D33A91D2F1F320021E71D /* BrickNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D33A81D2F1F320021E71D /* BrickNode.swift */; };
 		4751CB221D2DCAC900B262F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB211D2DCAC900B262F9 /* AppDelegate.swift */; };
 		4751CB261D2DCAC900B262F9 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB251D2DCAC900B262F9 /* GameScene.swift */; };
@@ -20,7 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		471476C71D2F38C6006D8E0E /* ball_bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ball_bounce.wav; sourceTree = "<group>"; };
+		471DBA0E1D33E6B000A8918A /* ball_bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ball_bounce.wav; sourceTree = "<group>"; };
+		471DBA101D33E85100A8918A /* phaserbank.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = phaserbank.ttf; sourceTree = "<group>"; };
 		474D33A81D2F1F320021E71D /* BrickNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickNode.swift; sourceTree = "<group>"; };
 		4751CB1E1D2DCAC900B262F9 /* Sprite Kit Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sprite Kit Breakout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		4751CB211D2DCAC900B262F9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -45,12 +47,29 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		471476C61D2F38B2006D8E0E /* Sounds */ = {
+		471DBA0B1D33E6B000A8918A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				471476C71D2F38C6006D8E0E /* ball_bounce.wav */,
+				471DBA0C1D33E6B000A8918A /* Fonts */,
+				471DBA0D1D33E6B000A8918A /* Sounds */,
 			);
-			name = Sounds;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		471DBA0C1D33E6B000A8918A /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				471DBA101D33E85100A8918A /* phaserbank.ttf */,
+			);
+			path = Fonts;
+			sourceTree = "<group>";
+		};
+		471DBA0D1D33E6B000A8918A /* Sounds */ = {
+			isa = PBXGroup;
+			children = (
+				471DBA0E1D33E6B000A8918A /* ball_bounce.wav */,
+			);
+			path = Sounds;
 			sourceTree = "<group>";
 		};
 		4751CB151D2DCAC900B262F9 = {
@@ -72,7 +91,7 @@
 		4751CB201D2DCAC900B262F9 /* Sprite Kit Breakout */ = {
 			isa = PBXGroup;
 			children = (
-				471476C61D2F38B2006D8E0E /* Sounds */,
+				471DBA0B1D33E6B000A8918A /* Resources */,
 				4751CB2C1D2DCAC900B262F9 /* Assets.xcassets */,
 				4751CB211D2DCAC900B262F9 /* AppDelegate.swift */,
 				4751CB251D2DCAC900B262F9 /* GameScene.swift */,
@@ -146,7 +165,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				4751CB301D2DCAC900B262F9 /* LaunchScreen.storyboard in Resources */,
-				471476C81D2F38C6006D8E0E /* ball_bounce.wav in Resources */,
+				471DBA111D33E85100A8918A /* phaserbank.ttf in Resources */,
+				471DBA0F1D33E6B000A8918A /* ball_bounce.wav in Resources */,
 				4751CB2D1D2DCAC900B262F9 /* Assets.xcassets in Resources */,
 				4751CB2B1D2DCAC900B262F9 /* Main.storyboard in Resources */,
 			);
