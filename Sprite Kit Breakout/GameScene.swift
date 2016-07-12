@@ -137,178 +137,181 @@ class GameScene: SKScene {
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
         
-        
-        switch self.gameState {
-        case .MainMenu:
+        if !paused {
             
-            
-            break
-            
-        case .InGame:
-            
-            if self.ballNode.enabled {
+            switch self.gameState {
+            case .MainMenu:
                 
-                // check player hit
-                if self.ballNode.intersectsNode(self.playerNode) {
-                    
-                    self.ballNode.move.y *= -1
-                    
-                    // check side
-                    let normal = (abs(self.ballNode.position.x - self.playerNode.position.x) - 0) / (self.playerNode.size.width / 2 - 0);
-                    self.ballNode.move.x = Float(normal)
-                    
-                    if self.ballNode.position.x < self.playerNode.position.x {
-                        
-                        if self.ballNode.move.x > 0 {
-                            
-                            self.ballNode.move.x *= -1
-                            
-                        } else {
-                            
-                            self.ballNode.move.x *= 1
-                        }
-                        
-                    } else {
-                        
-                        if self.ballNode.move.x > 0 {
-                            
-                            self.ballNode.move.x *= 1
-                            
-                        } else {
-                            
-                            self.ballNode.move.x *= -1
-                        }
-                        
-                    }
-                    
-                    let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                    self.runAction(a)
-                    
-                }
                 
-                // check brick hit
-                self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
+                break
+                
+            case .InGame:
+                
+                if self.ballNode.enabled {
                     
-                    node, stop in
-                    
-                    if self.ballNode.intersectsNode(node) {
-                        
-                        let brick = node as! BrickNode
-                        
-                        let brickIndex = self.brickNodes.indexOf(brick)
-                        
-                        if let brickIndex = brickIndex {
-                            
-                            GameManager.sharedInstance.score! += brick.brickData.points
-                            self.scoreLabel.text = String(GameManager.sharedInstance.score)
-                            
-                            let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                            self.runAction(a)
-                            
-                            self.brickNodes.removeAtIndex(brickIndex)
-                            node.removeFromParent()
-                            
-//                            brick.physicsBody = SKPhysicsBody(texture: brick.texture!, size: brick.size)
-//                            brick.physicsBody?.dynamic = true                                                                                    
-                            
-                            
-                        }
+                    // check player hit
+                    if self.ballNode.intersectsNode(self.playerNode) {
                         
                         self.ballNode.move.y *= -1
-                        self.ballNode.move.x *= 1
                         
-                        stop.memory = true
+                        // check side
+                        let normal = (abs(self.ballNode.position.x - self.playerNode.position.x) - 0) / (self.playerNode.size.width / 2 - 0);
+                        self.ballNode.move.x = Float(normal)
+                        
+                        if self.ballNode.position.x < self.playerNode.position.x {
+                            
+                            if self.ballNode.move.x > 0 {
+                                
+                                self.ballNode.move.x *= -1
+                                
+                            } else {
+                                
+                                self.ballNode.move.x *= 1
+                            }
+                            
+                        } else {
+                            
+                            if self.ballNode.move.x > 0 {
+                                
+                                self.ballNode.move.x *= 1
+                                
+                            } else {
+                                
+                                self.ballNode.move.x *= -1
+                            }
+                            
+                        }
+                        
+                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                        self.runAction(a)
+                        
                     }
                     
-                })
-                
-                // check walls
-                if self.leftWallNode.intersectsNode(self.ballNode) || self.rightWallNode.intersectsNode(self.ballNode) {
+                    // check brick hit
+                    self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
+                        
+                        node, stop in
+                        
+                        if self.ballNode.intersectsNode(node) {
+                            
+                            let brick = node as! BrickNode
+                            
+                            let brickIndex = self.brickNodes.indexOf(brick)
+                            
+                            if let brickIndex = brickIndex {
+                                
+                                GameManager.sharedInstance.score! += brick.brickData.points
+                                self.scoreLabel.text = String(GameManager.sharedInstance.score)
+                                
+                                let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                                self.runAction(a)
+                                
+                                self.brickNodes.removeAtIndex(brickIndex)
+                                node.removeFromParent()
+                                
+                                //                            brick.physicsBody = SKPhysicsBody(texture: brick.texture!, size: brick.size)
+                                //                            brick.physicsBody?.dynamic = true
+                                
+                                
+                            }
+                            
+                            self.ballNode.move.y *= -1
+                            self.ballNode.move.x *= 1
+                            
+                            stop.memory = true
+                        }
+                        
+                    })
                     
-                    self.ballNode.move.x *= -1
+                    // check walls
+                    if self.leftWallNode.intersectsNode(self.ballNode) || self.rightWallNode.intersectsNode(self.ballNode) {
+                        
+                        self.ballNode.move.x *= -1
+                        
+                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                        self.runAction(a)
+                        
+                    }
                     
-                    let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                    self.runAction(a)
+                    if self.topWallNode.intersectsNode(self.ballNode) {
+                        
+                        self.ballNode.move.y *= -1
+                        
+                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                        self.runAction(a)
+                        
+                    }
                     
-                }
-                
-                if self.topWallNode.intersectsNode(self.ballNode) {
+                    if self.ballNode.position.x <= 0 || self.ballNode.position.x >= self.view!.frame.width {
+                        
+                        self.ballNode.move.x *= -1
+                        
+                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                        self.runAction(a)
+                    }
                     
-                    self.ballNode.move.y *= -1
+                    if self.ballNode.position.y >= self.view!.frame.height {
+                        
+                        self.ballNode.move.y *= -1
+                        
+                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+                        self.runAction(a)
+                        
+                    }
                     
-                    let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                    self.runAction(a)
+                    if self.ballNode.position.y <= 0 && self.ballNode.enabled {
+                        
+                        // remove life
+                        GameManager.sharedInstance.lives! -= 1
+                        
+                        if GameManager.sharedInstance.lives <= 0 {
+                            
+                            // reset game
+                            resetGame()
+                            
+                        } else {
+                            
+                            // reset ball
+                            resetBallAndStart()
+                        }
+                        
+                        self.livesLabel.text = String(GameManager.sharedInstance.lives)
+                        
+                    }
                     
-                }
-                
-                if self.ballNode.position.x <= 0 || self.ballNode.position.x >= self.view!.frame.width {
-                    
-                    self.ballNode.move.x *= -1
-                    
-                    let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                    self.runAction(a)
-                }
-                
-                if self.ballNode.position.y >= self.view!.frame.height {
-                    
-                    self.ballNode.move.y *= -1
-                    
-                    let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                    self.runAction(a)
-                    
-                }
-                
-                if self.ballNode.position.y <= 0 && self.ballNode.enabled {
-                    
-                    // remove life
-                    GameManager.sharedInstance.lives! -= 1
-                    
-                    if GameManager.sharedInstance.lives <= 0 {
+                    if self.brickNodes.count == 0 {
                         
                         // reset game
                         resetGame()
                         
-                    } else {
-                        
-                        // reset ball
-                        resetBallAndStart()
                     }
                     
-                    self.livesLabel.text = String(GameManager.sharedInstance.lives)
+                    // move ball
+                    self.ballNode.position.x += CGFloat(self.ballNode.move.x * Float(dt)) * self.ballNode.moveSpeed
+                    self.ballNode.position.y += CGFloat(self.ballNode.move.y * Float(dt)) * self.ballNode.moveSpeed
+                    
+                    // ball trail
+                    let trailSprite = self.ballNode.copy() as! SKSpriteNode
+                    trailSprite.blendMode = .Add
+                    addChild(trailSprite)
+
+                    let trailScale = SKAction.scaleTo(0, duration: 0.15)
+                    trailSprite.runAction(trailScale, completion: {
+                        
+                        trailSprite.removeFromParent()
+                    })
                     
                 }
                 
-                if self.brickNodes.count == 0 {
-                    
-                    // reset game
-                    resetGame()
-                    
-                }
+                break
                 
-                // move ball
-                self.ballNode.position.x += CGFloat(self.ballNode.move.x * Float(dt)) * self.ballNode.moveSpeed
-                self.ballNode.position.y += CGFloat(self.ballNode.move.y * Float(dt)) * self.ballNode.moveSpeed
+            case .GameOver:
                 
-                let trailSprite = self.ballNode.copy() as! SKSpriteNode
-                trailSprite.blendMode = .Add
-                addChild(trailSprite)
                 
-                //let trailWait = SKAction.waitForDuration(0.1)
-                let trailScale = SKAction.scaleTo(0, duration: 0.15)
-                
-                //let trailFade = SKAction.fadeAlphaTo(0, duration: 0.25)
-                trailSprite.runAction(trailScale, completion: {
-                    
-                    trailSprite.removeFromParent()
-                })
+                break
                 
             }
-
-            break
-        case .GameOver:
             
-            
-            break
             
         }
         
