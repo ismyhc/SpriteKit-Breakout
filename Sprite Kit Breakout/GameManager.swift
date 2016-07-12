@@ -12,27 +12,27 @@ import GameplayKit
 class GameManager {
     
     static let sharedInstance = GameManager()
-    
-    var view: SKView!
 
     var atlas: SKTextureAtlas!
+    var score: Int!
+    var lives: Int!
     
-    var score = 0
-    var lives = 3
-    
-    let brickColumns = 14
-    let brickRows = 6
-    
-    let brickZ: CGFloat = 1
-    let wallZ: CGFloat = 2
-    let playerZ: CGFloat = 2
-    let ballZ: CGFloat = 2
-    
+    var brickSize: CGSize {
+        
+        return CGSize(width: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().width / UIScreen.mainScreen().scale,
+                      height: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale)
+
+    }
+
+    private var view: SKView!
     private init() {}
     
     func initialize(view: SKView) {
         
         self.view = view
+        
+        self.score = 0
+        self.lives = 3
         
         // Preload sound
         SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
@@ -45,9 +45,9 @@ class GameManager {
         
         var textures = [String: SKTexture]()
         
-        let baseWidth = ceil(self.view.frame.width / CGFloat(self.brickColumns)) / 1
-        let wallThickness = ceil((baseWidth / 2) * CGFloat(brickRows / 3)) / 1
-        let brickWidth = ceil((self.view.frame.width - (wallThickness * 2)) / CGFloat(self.brickColumns)) / 1
+        let baseWidth = ceil(self.view.frame.width / GameManager.PlayField.BrickColumns) / 1
+        let wallThickness = ceil((baseWidth / 2) * GameManager.PlayField.BrickRows / 3) / 1
+        let brickWidth = ceil((self.view.frame.width - (wallThickness * 2)) / GameManager.PlayField.BrickColumns) / 1
         
         // Create texture for bricks
         let tempBrickNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth, height: brickWidth / 2))
@@ -55,8 +55,8 @@ class GameManager {
         tempBrickNode.fillColor = UIColor.whiteColor()
         tempBrickNode.strokeColor = UIColor.clearColor()
         
-        textures["brick"] = self.view.textureFromNode(tempBrickNode, crop: tempBrickNode.frame)
-        textures["brick"]?.filteringMode = .Nearest
+        textures[GameManager.Names.Brick] = self.view.textureFromNode(tempBrickNode, crop: tempBrickNode.frame)
+        textures[GameManager.Names.Brick]?.filteringMode = .Nearest
         
         // Create texture for walls
         let tempWallNode = SKShapeNode(rectOfSize: CGSize(width: wallThickness, height: self.view.frame.height / 1.5))
@@ -64,8 +64,8 @@ class GameManager {
         tempWallNode.fillColor = UIColor.whiteColor()
         tempWallNode.strokeColor = UIColor.clearColor()
         
-        textures["sideWall"] = self.view.textureFromNode(tempWallNode, crop: tempWallNode.frame)
-        textures["sideWall"]?.filteringMode = .Nearest
+        textures[GameManager.Names.SideWall] = self.view.textureFromNode(tempWallNode, crop: tempWallNode.frame)
+        textures[GameManager.Names.SideWall]?.filteringMode = .Nearest
         
         // Create texture for top
         let tempTopWallNode = SKShapeNode(rectOfSize: CGSize(width: self.view.frame.width, height: wallThickness))
@@ -73,8 +73,8 @@ class GameManager {
         tempTopWallNode.fillColor = UIColor.whiteColor()
         tempTopWallNode.strokeColor = UIColor.clearColor()
         
-        textures["topWall"] = self.view.textureFromNode(tempTopWallNode, crop: tempTopWallNode.frame)
-        textures["topWall"]?.filteringMode = .Nearest
+        textures[GameManager.Names.TopWall] = self.view.textureFromNode(tempTopWallNode, crop: tempTopWallNode.frame)
+        textures[GameManager.Names.TopWall]?.filteringMode = .Nearest
         
         // Create texture for player
         let tempPlayerNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth * 2, height: brickWidth / 2))
@@ -82,8 +82,8 @@ class GameManager {
         tempPlayerNode.fillColor = UIColor.whiteColor()
         tempPlayerNode.strokeColor = UIColor.clearColor()
         
-        textures["player"] = self.view.textureFromNode(tempPlayerNode, crop: tempPlayerNode.frame)
-        textures["player"]?.filteringMode = .Nearest
+        textures[GameManager.Names.Player] = self.view.textureFromNode(tempPlayerNode, crop: tempPlayerNode.frame)
+        textures[GameManager.Names.Player]?.filteringMode = .Nearest
         
         // Create texture for ball
         let tempBallNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth / 2, height: brickWidth / 2))
@@ -91,8 +91,8 @@ class GameManager {
         tempBallNode.fillColor = UIColor.whiteColor()
         tempBallNode.strokeColor = UIColor.clearColor()
         
-        textures["ball"] = self.view.textureFromNode(tempBallNode, crop: tempBallNode.frame)
-        textures["ball"]?.filteringMode = .Nearest
+        textures[GameManager.Names.Ball] = self.view.textureFromNode(tempBallNode, crop: tempBallNode.frame)
+        textures[GameManager.Names.Ball]?.filteringMode = .Nearest
         
         // Create texture atlas
         var images = [String: UIImage]()
@@ -117,6 +117,32 @@ class GameManager {
         static let Pink = UIColor(red: 255/255, green: 119/255, blue: 168/255, alpha: 1)
         static let LightGray = UIColor(red: 194/255, green: 195/255, blue: 199/255, alpha: 1)
         static let Purple = UIColor(red: 131/255, green: 118/255, blue: 156/255, alpha: 1)
+        
+    }
+    
+    struct ZOrders {
+        
+        static let Brick: CGFloat = 1
+        static let Wall: CGFloat = 2
+        static let Player: CGFloat = 2
+        static let Ball: CGFloat = 2
+        
+    }
+    
+    struct PlayField {
+        
+        static let BrickColumns: CGFloat = 14
+        static let BrickRows: CGFloat = 6
+        
+    }
+    
+    struct Names {
+        
+        static let Ball = "ball"
+        static let Player = "player"
+        static let TopWall = "top_wall"
+        static let SideWall = "side_wall"
+        static let Brick = "brick"
         
     }
     

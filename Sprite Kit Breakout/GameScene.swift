@@ -36,11 +36,6 @@ class GameScene: SKScene {
         
         self.backgroundColor = UIColor.blackColor()
         
-//        for name in UIFont.familyNames() {
-//            print(name)
-//            print(UIFont.fontNamesForFamilyName(name))
-//        }
-        
         // Create playing field
         createPlayingField()
         
@@ -48,27 +43,27 @@ class GameScene: SKScene {
         createPlaceBricks()
         
         // Create player
-        let playerTexture = GameManager.sharedInstance.atlas.textureNamed("player")
+        let playerTexture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Player)
         self.playerNode = SKSpriteNode(texture: playerTexture)
         self.playerNode.color = GameManager.Color.Red
         self.playerNode.colorBlendFactor = 1
         self.playerNode.setScale(1 / UIScreen.mainScreen().scale)
         self.playerNode.position = CGPoint(x: view.center.x, y: (self.leftWallNode.position.y - self.leftWallNode.size.height) + (self.playerNode.size.height / 2))
-        self.playerNode.zPosition = GameManager.sharedInstance.playerZ
+        self.playerNode.zPosition = GameManager.ZOrders.Player
         addChild(self.playerNode)
         
         // Create ball
-        let ballTexture = GameManager.sharedInstance.atlas.textureNamed("ball")
+        let ballTexture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Ball)
         let ballWidth = ballTexture.size().width / UIScreen.mainScreen().scale
         let ballSize = CGSize(width: ballWidth, height: ballWidth)
-        self.ballNode = BallNode(texture: GameManager.sharedInstance.atlas.textureNamed("ball"), color: GameManager.Color.Yellow, size: ballSize)
+        self.ballNode = BallNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Ball), color: GameManager.Color.Yellow, size: ballSize)
         self.ballNode.colorBlendFactor = 1
         self.ballNode.position = view.center
         self.ballNode.position.y += 35
         self.ballNode.setScale(1 / UIScreen.mainScreen().scale)
         self.ballNode.move = vector2(0, -1)
         self.ballNode.moveSpeed = 250
-        self.ballNode.zPosition = GameManager.sharedInstance.ballZ
+        self.ballNode.zPosition = GameManager.ZOrders.Ball
         addChild(self.ballNode)
         
         // score label
@@ -192,7 +187,7 @@ class GameScene: SKScene {
                 }
                 
                 // check brick hit
-                self.enumerateChildNodesWithName("brick", usingBlock: {
+                self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
                     
                     node, stop in
                     
@@ -204,7 +199,7 @@ class GameScene: SKScene {
                         
                         if let brickIndex = brickIndex {
                             
-                            GameManager.sharedInstance.score += brick.brickData.points
+                            GameManager.sharedInstance.score! += brick.brickData.points
                             self.scoreLabel.text = String(GameManager.sharedInstance.score)
                             
                             let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
@@ -266,7 +261,7 @@ class GameScene: SKScene {
                 if self.ballNode.position.y <= 0 && self.ballNode.enabled {
                     
                     // remove life
-                    GameManager.sharedInstance.lives -= 1
+                    GameManager.sharedInstance.lives! -= 1
                     
                     if GameManager.sharedInstance.lives <= 0 {
                         
@@ -358,35 +353,35 @@ class GameScene: SKScene {
     
     func createPlayingField() {
         
-        let brickHeight = GameManager.sharedInstance.atlas.textureNamed("brick").size().height / UIScreen.mainScreen().scale
+        let brickHeight = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale
         
-        let y:CGFloat = self.view!.frame.height - brickHeight * CGFloat(GameManager.sharedInstance.brickRows / 2)
+        let y:CGFloat = self.view!.frame.height - brickHeight * GameManager.PlayField.BrickRows / 2
         
-        self.leftWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("sideWall"))
+        self.leftWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.SideWall))
         self.leftWallNode.color = GameManager.Color.LightGray
         self.leftWallNode.colorBlendFactor = 1
         self.leftWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.leftWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.leftWallNode.position = CGPoint(x: 0, y: y)
-        self.leftWallNode.zPosition = GameManager.sharedInstance.wallZ
+        self.leftWallNode.zPosition = GameManager.ZOrders.Wall
         addChild(self.leftWallNode)
         
-        self.rightWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("sideWall"))
+        self.rightWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.SideWall))
         self.rightWallNode.color = GameManager.Color.LightGray
         self.rightWallNode.colorBlendFactor = 1
         self.rightWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.rightWallNode.anchorPoint = CGPoint(x: 1, y: 1)
         self.rightWallNode.position = CGPoint(x: self.view!.frame.width, y: y)
-        self.rightWallNode.zPosition = GameManager.sharedInstance.wallZ
+        self.rightWallNode.zPosition = GameManager.ZOrders.Wall
         addChild(self.rightWallNode)
         
-        self.topWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed("topWall"))
+        self.topWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.TopWall))
         self.topWallNode.color = GameManager.Color.LightGray
         self.topWallNode.colorBlendFactor = 1
         self.topWallNode.setScale(1 / UIScreen.mainScreen().scale)
         self.topWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.topWallNode.position = CGPoint(x: 0, y: y)
-        self.topWallNode.zPosition = GameManager.sharedInstance.wallZ
+        self.topWallNode.zPosition = GameManager.ZOrders.Wall
         addChild(self.topWallNode)
         
     }
@@ -395,7 +390,7 @@ class GameScene: SKScene {
         
         
         // cleanup any brick nodes left
-        self.enumerateChildNodesWithName("brick", usingBlock: {
+        self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
             
             node, stop in
             
@@ -406,16 +401,16 @@ class GameScene: SKScene {
         self.brickNodes = [BrickNode]()
         
         // layout brick nodes
-        let brickWidth = GameManager.sharedInstance.atlas.textureNamed("brick").size().width / UIScreen.mainScreen().scale
-        let brickHeight = GameManager.sharedInstance.atlas.textureNamed("brick").size().height / UIScreen.mainScreen().scale
+        let brickWidth = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().width / UIScreen.mainScreen().scale
+        let brickHeight = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale
         
-        var y:CGFloat = (self.topWallNode.position.y - self.topWallNode.size.height) - (brickHeight * CGFloat(GameManager.sharedInstance.brickRows / 2))
+        var y:CGFloat = (self.topWallNode.position.y - self.topWallNode.size.height) - (brickHeight * GameManager.PlayField.BrickRows / 2)
         
-        for i in (1...GameManager.sharedInstance.brickRows).reverse() {
+        for i in (1...Int(GameManager.PlayField.BrickRows)).reverse() {
             
-            var x:CGFloat = self.view!.center.x - brickWidth * CGFloat(GameManager.sharedInstance.brickColumns / 2)
+            var x:CGFloat = self.view!.center.x - brickWidth * GameManager.PlayField.BrickColumns / 2
             
-            for _ in 1...GameManager.sharedInstance.brickColumns {
+            for _ in 1...Int(GameManager.PlayField.BrickColumns) {
                 
                 let brick = BrickNode()
                 

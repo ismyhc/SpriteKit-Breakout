@@ -31,8 +31,8 @@ class BrickNode: SKSpriteNode {
             self.colorBlendFactor = 1
             self.anchorPoint = CGPointZero
             self.setScale(1 / UIScreen.mainScreen().scale)
-            self.zPosition = GameManager.sharedInstance.brickZ
-            self.name = "brick"
+            self.zPosition = GameManager.ZOrders.Brick
+            self.name = GameManager.Names.Brick
             
         }
         
@@ -40,7 +40,7 @@ class BrickNode: SKSpriteNode {
     
     convenience init() {
         
-        let texture = GameManager.sharedInstance.atlas.textureNamed("brick")
+        let texture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick)
         let size = CGSize(width: texture.size().width, height: texture.size().height)
 
         self.init(texture: texture, color: UIColor.whiteColor(), size: size)
