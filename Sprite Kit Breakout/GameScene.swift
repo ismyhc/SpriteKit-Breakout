@@ -73,23 +73,27 @@ class GameScene: SKScene {
         
         // score label
         self.scoreLabel = SKLabelNode(fontNamed: "PhaserBank")
-        self.scoreLabel.fontSize = 18
+        self.scoreLabel.fontSize = 10
         self.scoreLabel.fontColor = GameManager.Color.LightGray
         self.scoreLabel.text = "0"
         self.scoreLabel.horizontalAlignmentMode = .Left
-        self.scoreLabel.verticalAlignmentMode = .Top
-        self.scoreLabel.position = CGPoint(x: 12, y: self.view!.frame.height - 10)
+        self.scoreLabel.verticalAlignmentMode = .Center
+        self.scoreLabel.position = CGPoint(x: 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
         addChild(self.scoreLabel)
+        
+        self.scoreLabel.adjustLabelFontSizeToFitHeight(self.view!.frame.height - self.topWallNode.position.y)
         
         // lives label
         self.livesLabel = SKLabelNode(fontNamed: "PhaserBank")
-        self.livesLabel.fontSize = 18
+        self.livesLabel.fontSize = 10
         self.livesLabel.fontColor = GameManager.Color.LightGray
         self.livesLabel.text = "3"
         self.livesLabel.horizontalAlignmentMode = .Right
-        self.livesLabel.verticalAlignmentMode = .Top
-        self.livesLabel.position = CGPoint(x: self.view!.frame.width - 12, y: self.view!.frame.height - 10)
+        self.livesLabel.verticalAlignmentMode = .Center
+        self.livesLabel.position = CGPoint(x: self.view!.frame.width - 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
         addChild(self.livesLabel)
+        
+        self.livesLabel.adjustLabelFontSizeToFitHeight(self.view!.frame.height - self.topWallNode.position.y)
         
         // start game
         resetBallAndStart()
@@ -289,6 +293,19 @@ class GameScene: SKScene {
                 // move ball
                 self.ballNode.position.x += CGFloat(self.ballNode.move.x * Float(dt)) * self.ballNode.moveSpeed
                 self.ballNode.position.y += CGFloat(self.ballNode.move.y * Float(dt)) * self.ballNode.moveSpeed
+                
+                let trailSprite = self.ballNode.copy() as! SKSpriteNode
+                trailSprite.blendMode = .Add
+                addChild(trailSprite)
+                
+                //let trailWait = SKAction.waitForDuration(0.1)
+                let trailScale = SKAction.scaleTo(0, duration: 0.15)
+                
+                //let trailFade = SKAction.fadeAlphaTo(0, duration: 0.25)
+                trailSprite.runAction(trailScale, completion: {
+                    
+                    trailSprite.removeFromParent()
+                })
                 
             }
 

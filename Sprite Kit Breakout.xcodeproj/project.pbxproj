@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		470DBBE01D351AAF002992F2 /* SKLabelNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */; };
 		471DBA0F1D33E6B000A8918A /* ball_bounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA0E1D33E6B000A8918A /* ball_bounce.wav */; };
 		471DBA111D33E85100A8918A /* phaserbank.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA101D33E85100A8918A /* phaserbank.ttf */; };
 		474D33A91D2F1F320021E71D /* BrickNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D33A81D2F1F320021E71D /* BrickNode.swift */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKLabelNode+Extensions.swift"; sourceTree = "<group>"; };
 		471DBA0E1D33E6B000A8918A /* ball_bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ball_bounce.wav; sourceTree = "<group>"; };
 		471DBA101D33E85100A8918A /* phaserbank.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = phaserbank.ttf; sourceTree = "<group>"; };
 		474D33A81D2F1F320021E71D /* BrickNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickNode.swift; sourceTree = "<group>"; };
@@ -47,6 +49,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		470DBBDE1D351A9A002992F2 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
 		471DBA0B1D33E6B000A8918A /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -91,6 +101,7 @@
 		4751CB201D2DCAC900B262F9 /* Sprite Kit Breakout */ = {
 			isa = PBXGroup;
 			children = (
+				470DBBDE1D351A9A002992F2 /* Extensions */,
 				471DBA0B1D33E6B000A8918A /* Resources */,
 				4751CB2C1D2DCAC900B262F9 /* Assets.xcassets */,
 				4751CB211D2DCAC900B262F9 /* AppDelegate.swift */,
@@ -180,6 +191,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4751CB261D2DCAC900B262F9 /* GameScene.swift in Sources */,
+				470DBBE01D351AAF002992F2 /* SKLabelNode+Extensions.swift in Sources */,
 				474D33A91D2F1F320021E71D /* BrickNode.swift in Sources */,
 				4751CB381D2DCBC000B262F9 /* GameManager.swift in Sources */,
 				4751CB3A1D2DE0ED00B262F9 /* BallNode.swift in Sources */,
