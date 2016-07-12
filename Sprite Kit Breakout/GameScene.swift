@@ -353,7 +353,7 @@ class GameScene: SKScene {
     
     func createPlayingField() {
         
-        let brickHeight = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale
+        let brickHeight = GameManager.sharedInstance.brickSize.height
         
         let y:CGFloat = self.view!.frame.height - brickHeight * GameManager.PlayField.BrickRows / 2
         
@@ -401,8 +401,8 @@ class GameScene: SKScene {
         self.brickNodes = [BrickNode]()
         
         // layout brick nodes
-        let brickWidth = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().width / UIScreen.mainScreen().scale
-        let brickHeight = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale
+        let brickWidth = GameManager.sharedInstance.brickSize.width
+        let brickHeight = GameManager.sharedInstance.brickSize.height
         
         var y:CGFloat = (self.topWallNode.position.y - self.topWallNode.size.height) - (brickHeight * GameManager.PlayField.BrickRows / 2)
         
