@@ -8,7 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		470DBBE01D351AAF002992F2 /* SKLabelNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */; };
-		471DBA0F1D33E6B000A8918A /* ball_bounce.wav in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA0E1D33E6B000A8918A /* ball_bounce.wav */; };
+		470DBBF01D35650A002992F2 /* bounce_1.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBE71D35650A002992F2 /* bounce_1.wav */; };
+		470DBBF11D35650A002992F2 /* bounce_2.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBE81D35650A002992F2 /* bounce_2.wav */; };
+		470DBBF21D35650A002992F2 /* bounce_3.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBE91D35650A002992F2 /* bounce_3.wav */; };
+		470DBBF31D35650A002992F2 /* bounce_4.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBEA1D35650A002992F2 /* bounce_4.wav */; };
+		470DBBF41D35650A002992F2 /* bounce_5.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBEB1D35650A002992F2 /* bounce_5.wav */; };
+		470DBBF51D35650A002992F2 /* bounce_6.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBEC1D35650A002992F2 /* bounce_6.wav */; };
+		470DBBF61D35650A002992F2 /* bounce_7.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBED1D35650A002992F2 /* bounce_7.wav */; };
+		470DBBF71D35650A002992F2 /* bounce_8.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBEE1D35650A002992F2 /* bounce_8.wav */; };
+		470DBBF81D35650A002992F2 /* game_over.wav in Resources */ = {isa = PBXBuildFile; fileRef = 470DBBEF1D35650A002992F2 /* game_over.wav */; };
 		471DBA111D33E85100A8918A /* phaserbank.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 471DBA101D33E85100A8918A /* phaserbank.ttf */; };
 		474D33A91D2F1F320021E71D /* BrickNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 474D33A81D2F1F320021E71D /* BrickNode.swift */; };
 		4751CB221D2DCAC900B262F9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB211D2DCAC900B262F9 /* AppDelegate.swift */; };
@@ -23,7 +31,15 @@
 
 /* Begin PBXFileReference section */
 		470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKLabelNode+Extensions.swift"; sourceTree = "<group>"; };
-		471DBA0E1D33E6B000A8918A /* ball_bounce.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = ball_bounce.wav; sourceTree = "<group>"; };
+		470DBBE71D35650A002992F2 /* bounce_1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_1.wav; sourceTree = "<group>"; };
+		470DBBE81D35650A002992F2 /* bounce_2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_2.wav; sourceTree = "<group>"; };
+		470DBBE91D35650A002992F2 /* bounce_3.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_3.wav; sourceTree = "<group>"; };
+		470DBBEA1D35650A002992F2 /* bounce_4.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_4.wav; sourceTree = "<group>"; };
+		470DBBEB1D35650A002992F2 /* bounce_5.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_5.wav; sourceTree = "<group>"; };
+		470DBBEC1D35650A002992F2 /* bounce_6.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_6.wav; sourceTree = "<group>"; };
+		470DBBED1D35650A002992F2 /* bounce_7.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_7.wav; sourceTree = "<group>"; };
+		470DBBEE1D35650A002992F2 /* bounce_8.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = bounce_8.wav; sourceTree = "<group>"; };
+		470DBBEF1D35650A002992F2 /* game_over.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = game_over.wav; sourceTree = "<group>"; };
 		471DBA101D33E85100A8918A /* phaserbank.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = phaserbank.ttf; sourceTree = "<group>"; };
 		474D33A81D2F1F320021E71D /* BrickNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrickNode.swift; sourceTree = "<group>"; };
 		4751CB1E1D2DCAC900B262F9 /* Sprite Kit Breakout.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Sprite Kit Breakout.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -77,7 +93,15 @@
 		471DBA0D1D33E6B000A8918A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				471DBA0E1D33E6B000A8918A /* ball_bounce.wav */,
+				470DBBE71D35650A002992F2 /* bounce_1.wav */,
+				470DBBE81D35650A002992F2 /* bounce_2.wav */,
+				470DBBE91D35650A002992F2 /* bounce_3.wav */,
+				470DBBEA1D35650A002992F2 /* bounce_4.wav */,
+				470DBBEB1D35650A002992F2 /* bounce_5.wav */,
+				470DBBEC1D35650A002992F2 /* bounce_6.wav */,
+				470DBBED1D35650A002992F2 /* bounce_7.wav */,
+				470DBBEE1D35650A002992F2 /* bounce_8.wav */,
+				470DBBEF1D35650A002992F2 /* game_over.wav */,
 			);
 			path = Sounds;
 			sourceTree = "<group>";
@@ -175,10 +199,18 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				470DBBF41D35650A002992F2 /* bounce_5.wav in Resources */,
+				470DBBF31D35650A002992F2 /* bounce_4.wav in Resources */,
+				470DBBF81D35650A002992F2 /* game_over.wav in Resources */,
+				470DBBF01D35650A002992F2 /* bounce_1.wav in Resources */,
+				470DBBF51D35650A002992F2 /* bounce_6.wav in Resources */,
+				470DBBF11D35650A002992F2 /* bounce_2.wav in Resources */,
 				4751CB301D2DCAC900B262F9 /* LaunchScreen.storyboard in Resources */,
+				470DBBF61D35650A002992F2 /* bounce_7.wav in Resources */,
 				471DBA111D33E85100A8918A /* phaserbank.ttf in Resources */,
-				471DBA0F1D33E6B000A8918A /* ball_bounce.wav in Resources */,
 				4751CB2D1D2DCAC900B262F9 /* Assets.xcassets in Resources */,
+				470DBBF21D35650A002992F2 /* bounce_3.wav in Resources */,
+				470DBBF71D35650A002992F2 /* bounce_8.wav in Resources */,
 				4751CB2B1D2DCAC900B262F9 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

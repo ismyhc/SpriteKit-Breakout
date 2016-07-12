@@ -62,7 +62,7 @@ class GameScene: SKScene {
         self.ballNode.position.y += 35
         self.ballNode.setScale(1 / UIScreen.mainScreen().scale)
         self.ballNode.move = vector2(0, -1)
-        self.ballNode.moveSpeed = 250
+        self.ballNode.actualMoveSpeed = self.ballNode.moveSpeed
         self.ballNode.zPosition = GameManager.ZOrders.Ball
         addChild(self.ballNode)
         
@@ -182,8 +182,7 @@ class GameScene: SKScene {
                             
                         }
                         
-                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                        self.runAction(a)
+                        GameManager.sharedInstance.playSound("bounce_1")
                         
                     }
                     
@@ -203,15 +202,15 @@ class GameScene: SKScene {
                                 GameManager.sharedInstance.score! += brick.brickData.points
                                 self.scoreLabel.text = String(GameManager.sharedInstance.score)
                                 
-                                let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                                self.runAction(a)
+                                GameManager.sharedInstance.playSound(brick.brickData.soundName)
+                                
+                                self.ballNode.actualMoveSpeed = self.ballNode.moveSpeed * brick.brickData.ballSpeedModifier
                                 
                                 self.brickNodes.removeAtIndex(brickIndex)
                                 node.removeFromParent()
                                 
-                                //                            brick.physicsBody = SKPhysicsBody(texture: brick.texture!, size: brick.size)
-                                //                            brick.physicsBody?.dynamic = true
-                                
+                                //brick.physicsBody = SKPhysicsBody(texture: brick.texture!, size: brick.size)
+                                //brick.physicsBody?.dynamic = true
                                 
                             }
                             
@@ -227,35 +226,27 @@ class GameScene: SKScene {
                     if self.leftWallNode.intersectsNode(self.ballNode) || self.rightWallNode.intersectsNode(self.ballNode) {
                         
                         self.ballNode.move.x *= -1
-                        
-                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                        self.runAction(a)
+                        GameManager.sharedInstance.playSound("bounce_2")
                         
                     }
                     
                     if self.topWallNode.intersectsNode(self.ballNode) {
                         
                         self.ballNode.move.y *= -1
-                        
-                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                        self.runAction(a)
+                        GameManager.sharedInstance.playSound("bounce_2")
                         
                     }
                     
                     if self.ballNode.position.x <= 0 || self.ballNode.position.x >= self.view!.frame.width {
                         
                         self.ballNode.move.x *= -1
-                        
-                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                        self.runAction(a)
+                        GameManager.sharedInstance.playSound("bounce_2")
                     }
                     
                     if self.ballNode.position.y >= self.view!.frame.height {
                         
                         self.ballNode.move.y *= -1
-                        
-                        let a = SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
-                        self.runAction(a)
+                        GameManager.sharedInstance.playSound("bounce_2")
                         
                     }
                     
@@ -287,8 +278,8 @@ class GameScene: SKScene {
                     }
                     
                     // move ball
-                    self.ballNode.position.x += CGFloat(self.ballNode.move.x * Float(dt)) * self.ballNode.moveSpeed
-                    self.ballNode.position.y += CGFloat(self.ballNode.move.y * Float(dt)) * self.ballNode.moveSpeed
+                    self.ballNode.position.x += CGFloat(self.ballNode.move.x * Float(dt)) * self.ballNode.actualMoveSpeed
+                    self.ballNode.position.y += CGFloat(self.ballNode.move.y * Float(dt)) * self.ballNode.actualMoveSpeed
                     
                     // ball trail
                     let trailSprite = self.ballNode.copy() as! SKSpriteNode
@@ -420,32 +411,32 @@ class GameScene: SKScene {
                 switch i {
                 case 1:
 
-                    brick.brickData = BrickData(points: 1, brickRow: .One, color: GameManager.Color.Purple, collectable: false)
+                    brick.brickData = BrickData(points: 1, brickRow: .One, color: GameManager.Color.Purple, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
 
                     break
                 case 2:
                     
-                    brick.brickData = BrickData(points: 1, brickRow: .Two, color: GameManager.Color.Blue, collectable: false)
+                    brick.brickData = BrickData(points: 1, brickRow: .Two, color: GameManager.Color.Blue, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
 
                     break
                 case 3:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Three, color: GameManager.Color.Green, collectable: false)
+                    brick.brickData = BrickData(points: 4, brickRow: .Three, color: GameManager.Color.Green, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
                     
                     break
                 case 4:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Four, color: GameManager.Color.Yellow, collectable: false)
+                    brick.brickData = BrickData(points: 4, brickRow: .Four, color: GameManager.Color.Yellow, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.33)
                     
                     break
                 case 5:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Five, color: GameManager.Color.Orange, collectable: false)
+                    brick.brickData = BrickData(points: 7, brickRow: .Five, color: GameManager.Color.Orange, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.66)
                     
                     break
                 case 6:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Six, color: GameManager.Color.Red, collectable: false)
+                    brick.brickData = BrickData(points: 7, brickRow: .Six, color: GameManager.Color.Red, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 2)
                     
                     break
                 default:

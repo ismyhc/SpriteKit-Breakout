@@ -18,6 +18,8 @@ struct BrickData {
     var brickRow: BrickRow
     var color: UIColor
     var collectable: Bool
+    var soundName: String
+    var ballSpeedModifier: CGFloat
     
 }
 

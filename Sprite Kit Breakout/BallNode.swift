@@ -11,8 +11,10 @@ import SpriteKit
 
 class BallNode: SKSpriteNode {
     
+    let moveSpeed: CGFloat = 200
+    
     var move: vector_float2!
-    var moveSpeed: CGFloat!
+    var actualMoveSpeed: CGFloat!
     
     var enabled = false {
         

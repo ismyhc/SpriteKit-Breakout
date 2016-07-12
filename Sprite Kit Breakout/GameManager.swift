@@ -41,6 +41,18 @@ class GameManager {
         
     }
     
+    private func prepareSounds() {
+        
+        for i in 1...8 {
+
+            SKAction.playSoundFileNamed("bounce_\(i)", waitForCompletion: false)
+            
+        }
+        
+        SKAction.playSoundFileNamed("game_over", waitForCompletion: false)
+        
+    }
+    
     private func createTextureAtlas() {
         
         var textures = [String: SKTexture]()
@@ -104,6 +116,12 @@ class GameManager {
         }
         
         self.atlas = SKTextureAtlas(dictionary: images)
+        
+    }
+    
+    func playSound(named: String) {
+        
+        self.view.scene!.runAction(SKAction.playSoundFileNamed(named, waitForCompletion: false))
         
     }
     
