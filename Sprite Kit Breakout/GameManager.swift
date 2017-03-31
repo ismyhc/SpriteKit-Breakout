@@ -19,15 +19,15 @@ class GameManager {
     
     var brickSize: CGSize {
         
-        return CGSize(width: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().width / UIScreen.mainScreen().scale,
-                      height: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.mainScreen().scale)
+        return CGSize(width: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().width / UIScreen.main.scale,
+                      height: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Brick).size().height / UIScreen.main.scale)
 
     }
 
-    private var view: SKView!
-    private init() {}
+    fileprivate var view: SKView!
+    fileprivate init() {}
     
-    func initialize(view: SKView) {
+    func initialize(_ view: SKView) {
         
         self.view = view
         
@@ -36,12 +36,13 @@ class GameManager {
         
         // Preload sound
         SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
+        self.prepareSounds()
         
         self.createTextureAtlas()
         
     }
     
-    private func prepareSounds() {
+    fileprivate func prepareSounds() {
         
         for i in 1...8 {
 
@@ -52,8 +53,8 @@ class GameManager {
         SKAction.playSoundFileNamed("game_over", waitForCompletion: false)
         
     }
-    
-    private func createTextureAtlas() {
+
+    fileprivate func createTextureAtlas() {
         
         var textures = [String: SKTexture]()
         
@@ -62,56 +63,56 @@ class GameManager {
         let brickWidth = ceil((self.view.frame.width - (wallThickness * 2)) / GameManager.PlayField.BrickColumns) / 1
         
         // Create texture for bricks
-        let tempBrickNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth, height: brickWidth / 2))
-        tempBrickNode.antialiased = false
-        tempBrickNode.fillColor = UIColor.whiteColor()
-        tempBrickNode.strokeColor = UIColor.clearColor()
+        let tempBrickNode = SKShapeNode(rectOf: CGSize(width: brickWidth, height: brickWidth / 2))
+        tempBrickNode.isAntialiased = false
+        tempBrickNode.fillColor = UIColor.white
+        tempBrickNode.strokeColor = UIColor.clear
         
-        textures[GameManager.Names.Brick] = self.view.textureFromNode(tempBrickNode, crop: tempBrickNode.frame)
-        textures[GameManager.Names.Brick]?.filteringMode = .Nearest
+        textures[GameManager.Names.Brick] = self.view.texture(from: tempBrickNode, crop: tempBrickNode.frame)
+        textures[GameManager.Names.Brick]?.filteringMode = .nearest
         
         // Create texture for walls
-        let tempWallNode = SKShapeNode(rectOfSize: CGSize(width: wallThickness, height: self.view.frame.height / 1.5))
-        tempWallNode.antialiased = false
-        tempWallNode.fillColor = UIColor.whiteColor()
-        tempWallNode.strokeColor = UIColor.clearColor()
+        let tempWallNode = SKShapeNode(rectOf: CGSize(width: wallThickness, height: self.view.frame.height / 1.5))
+        tempWallNode.isAntialiased = false
+        tempWallNode.fillColor = UIColor.white
+        tempWallNode.strokeColor = UIColor.clear
         
-        textures[GameManager.Names.SideWall] = self.view.textureFromNode(tempWallNode, crop: tempWallNode.frame)
-        textures[GameManager.Names.SideWall]?.filteringMode = .Nearest
+        textures[GameManager.Names.SideWall] = self.view.texture(from: tempWallNode, crop: tempWallNode.frame)
+        textures[GameManager.Names.SideWall]?.filteringMode = .nearest
         
         // Create texture for top
-        let tempTopWallNode = SKShapeNode(rectOfSize: CGSize(width: self.view.frame.width, height: wallThickness))
-        tempTopWallNode.antialiased = false
-        tempTopWallNode.fillColor = UIColor.whiteColor()
-        tempTopWallNode.strokeColor = UIColor.clearColor()
+        let tempTopWallNode = SKShapeNode(rectOf: CGSize(width: self.view.frame.width, height: wallThickness))
+        tempTopWallNode.isAntialiased = false
+        tempTopWallNode.fillColor = UIColor.white
+        tempTopWallNode.strokeColor = UIColor.clear
         
-        textures[GameManager.Names.TopWall] = self.view.textureFromNode(tempTopWallNode, crop: tempTopWallNode.frame)
-        textures[GameManager.Names.TopWall]?.filteringMode = .Nearest
+        textures[GameManager.Names.TopWall] = self.view.texture(from: tempTopWallNode, crop: tempTopWallNode.frame)
+        textures[GameManager.Names.TopWall]?.filteringMode = .nearest
         
         // Create texture for player
-        let tempPlayerNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth * 2, height: brickWidth / 2))
-        tempPlayerNode.antialiased = false
-        tempPlayerNode.fillColor = UIColor.whiteColor()
-        tempPlayerNode.strokeColor = UIColor.clearColor()
+        let tempPlayerNode = SKShapeNode(rectOf: CGSize(width: brickWidth * 2, height: brickWidth / 2))
+        tempPlayerNode.isAntialiased = false
+        tempPlayerNode.fillColor = UIColor.white
+        tempPlayerNode.strokeColor = UIColor.clear
         
-        textures[GameManager.Names.Player] = self.view.textureFromNode(tempPlayerNode, crop: tempPlayerNode.frame)
-        textures[GameManager.Names.Player]?.filteringMode = .Nearest
+        textures[GameManager.Names.Player] = self.view.texture(from: tempPlayerNode, crop: tempPlayerNode.frame)
+        textures[GameManager.Names.Player]?.filteringMode = .nearest
         
         // Create texture for ball
-        let tempBallNode = SKShapeNode(rectOfSize: CGSize(width: brickWidth / 2, height: brickWidth / 2))
-        tempBallNode.antialiased = false
-        tempBallNode.fillColor = UIColor.whiteColor()
-        tempBallNode.strokeColor = UIColor.clearColor()
+        let tempBallNode = SKShapeNode(rectOf: CGSize(width: brickWidth / 2, height: brickWidth / 2))
+        tempBallNode.isAntialiased = false
+        tempBallNode.fillColor = UIColor.white
+        tempBallNode.strokeColor = UIColor.clear
         
-        textures[GameManager.Names.Ball] = self.view.textureFromNode(tempBallNode, crop: tempBallNode.frame)
-        textures[GameManager.Names.Ball]?.filteringMode = .Nearest
+        textures[GameManager.Names.Ball] = self.view.texture(from: tempBallNode, crop: tempBallNode.frame)
+        textures[GameManager.Names.Ball]?.filteringMode = .nearest
         
         // Create texture atlas
         var images = [String: UIImage]()
         
         for (key, texture) in textures {
 
-            images[key] = UIImage(CGImage: texture.CGImage())
+            images[key] = UIImage(cgImage: texture.cgImage())
             
         }
         
@@ -119,9 +120,9 @@ class GameManager {
         
     }
     
-    func playSound(named: String) {
+    func playSound(_ named: String) {
         
-        self.view.scene!.runAction(SKAction.playSoundFileNamed(named, waitForCompletion: false))
+        self.view.scene!.run(SKAction.playSoundFileNamed(named, waitForCompletion: false))
         
     }
     

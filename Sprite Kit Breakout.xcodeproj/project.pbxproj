@@ -27,7 +27,23 @@
 		4751CB301D2DCAC900B262F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4751CB2E1D2DCAC900B262F9 /* LaunchScreen.storyboard */; };
 		4751CB381D2DCBC000B262F9 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB371D2DCBC000B262F9 /* GameManager.swift */; };
 		4751CB3A1D2DE0ED00B262F9 /* BallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB391D2DE0ED00B262F9 /* BallNode.swift */; };
+		477995961E8EF025007E3549 /* RetroTextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 477995951E8EF025007E3549 /* RetroTextureKit.framework */; };
+		477995971E8EF025007E3549 /* RetroTextureKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 477995951E8EF025007E3549 /* RetroTextureKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		47C02CE21D37D9BB006DD4BC /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				477995971E8EF025007E3549 /* RetroTextureKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		470DBBDF1D351AAF002992F2 /* SKLabelNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKLabelNode+Extensions.swift"; sourceTree = "<group>"; };
@@ -52,6 +68,7 @@
 		4751CB311D2DCAC900B262F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4751CB371D2DCBC000B262F9 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		4751CB391D2DE0ED00B262F9 /* BallNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallNode.swift; sourceTree = "<group>"; };
+		477995951E8EF025007E3549 /* RetroTextureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RetroTextureKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				477995961E8EF025007E3549 /* RetroTextureKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,6 +127,7 @@
 		4751CB151D2DCAC900B262F9 = {
 			isa = PBXGroup;
 			children = (
+				477995951E8EF025007E3549 /* RetroTextureKit.framework */,
 				4751CB201D2DCAC900B262F9 /* Sprite Kit Breakout */,
 				4751CB1F1D2DCAC900B262F9 /* Products */,
 			);
@@ -151,6 +170,7 @@
 				4751CB1A1D2DCAC900B262F9 /* Sources */,
 				4751CB1B1D2DCAC900B262F9 /* Frameworks */,
 				4751CB1C1D2DCAC900B262F9 /* Resources */,
+				47C02CE21D37D9BB006DD4BC /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -173,6 +193,8 @@
 				TargetAttributes = {
 					4751CB1D1D2DCAC900B262F9 = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = MHMRS5FLW6;
+						LastSwiftMigration = 0830;
 					};
 				};
 			};
@@ -343,10 +365,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MHMRS5FLW6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Sprite Kit Breakout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobdavis.Sprite-Kit-Breakout";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
 		};
@@ -354,10 +382,16 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = MHMRS5FLW6;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Sprite Kit Breakout/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.jacobdavis.Sprite-Kit-Breakout";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
 		};

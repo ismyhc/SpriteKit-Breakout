@@ -21,11 +21,11 @@ class BallNode: SKSpriteNode {
         didSet {
             if enabled {
                 
-                self.hidden = false
+                self.isHidden = false
                 
             } else {
                 
-                self.hidden = true
+                self.isHidden = true
             }
             
         }

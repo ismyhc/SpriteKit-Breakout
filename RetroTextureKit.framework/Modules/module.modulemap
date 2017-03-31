@@ -1,0 +1,10 @@
+framework module RetroTextureKit {
+  umbrella header "RetroTextureKit.h"
+
+  export *
+  module * { export * }
+}
+
+module RetroTextureKit.Swift {
+    header "RetroTextureKit-Swift.h"
+}

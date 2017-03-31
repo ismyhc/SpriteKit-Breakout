@@ -8,14 +8,15 @@
 
 import SpriteKit
 import GameplayKit
+import RetroTextureKit
 
 enum GameState {
-    case MainMenu,InGame,GameOver
+    case mainMenu,inGame,gameOver
 }
 
 class GameScene: SKScene {
     
-    private var lastUpdateTime: NSTimeInterval = 0
+    fileprivate var lastUpdateTime: TimeInterval = 0
     
     var playerNode: SKSpriteNode!
     var brickNodes: [BrickNode]!
@@ -28,13 +29,60 @@ class GameScene: SKScene {
     var scoreLabel: SKLabelNode!
     var livesLabel: SKLabelNode!
     
-    var gameState = GameState.InGame
+    var gameState = GameState.inGame
     
-    override func didMoveToView(view: SKView) {
+    override func didMove(to view: SKView) {
         
         GameManager.sharedInstance.initialize(view)
         
-        self.backgroundColor = UIColor.blackColor()
+        self.backgroundColor = UIColor.black
+        
+//        let pa = [
+//        
+//            [1, 1, 1, 1],
+//            [0, 1, 1, 0],
+//            [0, 1, 1, 0],
+//            [1, 1, 1, 1]
+//        ]
+//        
+//        let blah = [
+//
+//            "t": RetroTextureData(retroPixelArray: [
+//                
+//                [1, 1, 1, 1],
+//                [0, 1, 1, 0],
+//                [0, 1, 1, 0],
+//                [0, 1, 1, 0]
+//                
+//                ], retroPixelSize: 8),
+//
+//            "square": RetroTextureData(retroPixelArray: [
+//
+//                [1, 1, 1, 1],
+//                [1, 1, 1, 1],
+//                [1, 1, 1, 1],
+//                [1, 1, 1, 1]
+//                        
+//                ], retroPixelSize: 8),
+//            
+//            "tri": RetroTextureData(retroPixelArray: [
+//                
+//                [1, 1, 1, 1, 1],
+//                [0, 1, 1, 1, 0],
+//                [0, 0, 1, 0, 0]
+//                
+//            ], retroPixelSize: 8)
+//            
+//        ]
+        
+        //let tex = RetroTexture.createTextureAtlas(blah, view: view)
+        //let s = tex?.size()
+        
+//        let sprite = SKSpriteNode(texture: tex?.textureNamed("tri"))
+//        sprite.color = UIColor.red
+//        sprite.colorBlendFactor = 1
+//        sprite.position = view.center
+//        addChild(sprite)
         
         // Create playing field
         createPlayingField()
@@ -47,20 +95,20 @@ class GameScene: SKScene {
         self.playerNode = SKSpriteNode(texture: playerTexture)
         self.playerNode.color = GameManager.Color.Red
         self.playerNode.colorBlendFactor = 1
-        self.playerNode.setScale(1 / UIScreen.mainScreen().scale)
+        self.playerNode.setScale(1 / UIScreen.main.scale)
         self.playerNode.position = CGPoint(x: view.center.x, y: (self.leftWallNode.position.y - self.leftWallNode.size.height) + (self.playerNode.size.height / 2))
         self.playerNode.zPosition = GameManager.ZOrders.Player
         addChild(self.playerNode)
         
         // Create ball
         let ballTexture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Ball)
-        let ballWidth = ballTexture.size().width / UIScreen.mainScreen().scale
+        let ballWidth = ballTexture.size().width / UIScreen.main.scale
         let ballSize = CGSize(width: ballWidth, height: ballWidth)
         self.ballNode = BallNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Ball), color: GameManager.Color.Yellow, size: ballSize)
         self.ballNode.colorBlendFactor = 1
         self.ballNode.position = view.center
         self.ballNode.position.y += 35
-        self.ballNode.setScale(1 / UIScreen.mainScreen().scale)
+        self.ballNode.setScale(1 / UIScreen.main.scale)
         self.ballNode.move = vector2(0, -1)
         self.ballNode.actualMoveSpeed = self.ballNode.moveSpeed
         self.ballNode.zPosition = GameManager.ZOrders.Ball
@@ -71,8 +119,8 @@ class GameScene: SKScene {
         self.scoreLabel.fontSize = 10
         self.scoreLabel.fontColor = GameManager.Color.LightGray
         self.scoreLabel.text = "0"
-        self.scoreLabel.horizontalAlignmentMode = .Left
-        self.scoreLabel.verticalAlignmentMode = .Center
+        self.scoreLabel.horizontalAlignmentMode = .left
+        self.scoreLabel.verticalAlignmentMode = .center
         self.scoreLabel.position = CGPoint(x: 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
         addChild(self.scoreLabel)
         
@@ -83,8 +131,8 @@ class GameScene: SKScene {
         self.livesLabel.fontSize = 10
         self.livesLabel.fontColor = GameManager.Color.LightGray
         self.livesLabel.text = "3"
-        self.livesLabel.horizontalAlignmentMode = .Right
-        self.livesLabel.verticalAlignmentMode = .Center
+        self.livesLabel.horizontalAlignmentMode = .right
+        self.livesLabel.verticalAlignmentMode = .center
         self.livesLabel.position = CGPoint(x: self.view!.frame.width - 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
         addChild(self.livesLabel)
         
@@ -95,12 +143,12 @@ class GameScene: SKScene {
         
     }
     
-    override func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
         for touch in touches {
             
-            let previousLocation = touch.previousLocationInNode(self)
-            let currentLocation = touch.locationInNode(self)
+            let previousLocation = touch.previousLocation(in: self)
+            let currentLocation = touch.location(in: self)
             
             self.playerNode.position.x += currentLocation.x - previousLocation.x
             
@@ -127,7 +175,7 @@ class GameScene: SKScene {
     // MARK: GAME LOOP
     //
 
-    override func update(currentTime: NSTimeInterval) {
+    override func update(_ currentTime: TimeInterval) {
 
         // Initialize _lastUpdateTime if it has not already been
         if (self.lastUpdateTime == 0) {
@@ -137,20 +185,20 @@ class GameScene: SKScene {
         // Calculate time since last update
         let dt = currentTime - self.lastUpdateTime
         
-        if !paused {
+        if !isPaused {
             
             switch self.gameState {
-            case .MainMenu:
+            case .mainMenu:
                 
                 
                 break
                 
-            case .InGame:
+            case .inGame:
                 
                 if self.ballNode.enabled {
                     
                     // check player hit
-                    if self.ballNode.intersectsNode(self.playerNode) {
+                    if self.ballNode.intersects(self.playerNode) {
                         
                         self.ballNode.move.y *= -1
                         
@@ -187,15 +235,15 @@ class GameScene: SKScene {
                     }
                     
                     // check brick hit
-                    self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
+                    self.enumerateChildNodes(withName: GameManager.Names.Brick, using: {
                         
                         node, stop in
                         
-                        if self.ballNode.intersectsNode(node) {
+                        if self.ballNode.intersects(node) {
                             
                             let brick = node as! BrickNode
                             
-                            let brickIndex = self.brickNodes.indexOf(brick)
+                            let brickIndex = self.brickNodes.index(of: brick)
                             
                             if let brickIndex = brickIndex {
                                 
@@ -206,7 +254,7 @@ class GameScene: SKScene {
                                 
                                 self.ballNode.actualMoveSpeed = self.ballNode.moveSpeed * brick.brickData.ballSpeedModifier
                                 
-                                self.brickNodes.removeAtIndex(brickIndex)
+                                self.brickNodes.remove(at: brickIndex)
                                 node.removeFromParent()
                                 
                                 //brick.physicsBody = SKPhysicsBody(texture: brick.texture!, size: brick.size)
@@ -217,20 +265,20 @@ class GameScene: SKScene {
                             self.ballNode.move.y *= -1
                             self.ballNode.move.x *= 1
                             
-                            stop.memory = true
+                            stop.pointee = true
                         }
                         
                     })
                     
                     // check walls
-                    if self.leftWallNode.intersectsNode(self.ballNode) || self.rightWallNode.intersectsNode(self.ballNode) {
+                    if self.leftWallNode.intersects(self.ballNode) || self.rightWallNode.intersects(self.ballNode) {
                         
                         self.ballNode.move.x *= -1
                         GameManager.sharedInstance.playSound("bounce_2")
                         
                     }
                     
-                    if self.topWallNode.intersectsNode(self.ballNode) {
+                    if self.topWallNode.intersects(self.ballNode) {
                         
                         self.ballNode.move.y *= -1
                         GameManager.sharedInstance.playSound("bounce_2")
@@ -283,11 +331,11 @@ class GameScene: SKScene {
                     
                     // ball trail
                     let trailSprite = self.ballNode.copy() as! SKSpriteNode
-                    trailSprite.blendMode = .Add
+                    trailSprite.blendMode = .add
                     addChild(trailSprite)
 
-                    let trailScale = SKAction.scaleTo(0, duration: 0.15)
-                    trailSprite.runAction(trailScale, completion: {
+                    let trailScale = SKAction.scale(to: 0, duration: 0.15)
+                    trailSprite.run(trailScale, completion: {
                         
                         trailSprite.removeFromParent()
                     })
@@ -296,7 +344,7 @@ class GameScene: SKScene {
                 
                 break
                 
-            case .GameOver:
+            case .gameOver:
                 
                 
                 break
@@ -321,13 +369,13 @@ class GameScene: SKScene {
         self.ballNode.position = self.view!.center
         self.ballNode.position.y += 35
         
-        let wait = SKAction.waitForDuration(2)
-        self.runAction(wait) { 
+        let wait = SKAction.wait(forDuration: 2)
+        self.run(wait, completion: { 
 
             self.ballNode.enabled = true
             self.ballNode.move = vector2(0, -1)
             
-        }
+        }) 
         
     }
     
@@ -354,7 +402,7 @@ class GameScene: SKScene {
         self.leftWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.SideWall))
         self.leftWallNode.color = GameManager.Color.LightGray
         self.leftWallNode.colorBlendFactor = 1
-        self.leftWallNode.setScale(1 / UIScreen.mainScreen().scale)
+        self.leftWallNode.setScale(1 / UIScreen.main.scale)
         self.leftWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.leftWallNode.position = CGPoint(x: 0, y: y)
         self.leftWallNode.zPosition = GameManager.ZOrders.Wall
@@ -363,7 +411,7 @@ class GameScene: SKScene {
         self.rightWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.SideWall))
         self.rightWallNode.color = GameManager.Color.LightGray
         self.rightWallNode.colorBlendFactor = 1
-        self.rightWallNode.setScale(1 / UIScreen.mainScreen().scale)
+        self.rightWallNode.setScale(1 / UIScreen.main.scale)
         self.rightWallNode.anchorPoint = CGPoint(x: 1, y: 1)
         self.rightWallNode.position = CGPoint(x: self.view!.frame.width, y: y)
         self.rightWallNode.zPosition = GameManager.ZOrders.Wall
@@ -372,7 +420,7 @@ class GameScene: SKScene {
         self.topWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.TopWall))
         self.topWallNode.color = GameManager.Color.LightGray
         self.topWallNode.colorBlendFactor = 1
-        self.topWallNode.setScale(1 / UIScreen.mainScreen().scale)
+        self.topWallNode.setScale(1 / UIScreen.main.scale)
         self.topWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.topWallNode.position = CGPoint(x: 0, y: y)
         self.topWallNode.zPosition = GameManager.ZOrders.Wall
@@ -384,7 +432,7 @@ class GameScene: SKScene {
         
         
         // cleanup any brick nodes left
-        self.enumerateChildNodesWithName(GameManager.Names.Brick, usingBlock: {
+        self.enumerateChildNodes(withName: GameManager.Names.Brick, using: {
             
             node, stop in
             
@@ -400,7 +448,7 @@ class GameScene: SKScene {
         
         var y:CGFloat = (self.topWallNode.position.y - self.topWallNode.size.height) - (brickHeight * GameManager.PlayField.BrickRows / 2)
         
-        for i in (1...Int(GameManager.PlayField.BrickRows)).reverse() {
+        for i in (1...Int(GameManager.PlayField.BrickRows)).reversed() {
             
             var x:CGFloat = self.view!.center.x - brickWidth * GameManager.PlayField.BrickColumns / 2
             
@@ -411,32 +459,32 @@ class GameScene: SKScene {
                 switch i {
                 case 1:
 
-                    brick.brickData = BrickData(points: 1, brickRow: .One, color: GameManager.Color.Purple, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
+                    brick.brickData = BrickData(points: 1, brickRow: .one, color: GameManager.Color.Purple, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
 
                     break
                 case 2:
                     
-                    brick.brickData = BrickData(points: 1, brickRow: .Two, color: GameManager.Color.Blue, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
+                    brick.brickData = BrickData(points: 1, brickRow: .two, color: GameManager.Color.Blue, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
 
                     break
                 case 3:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Three, color: GameManager.Color.Green, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
+                    brick.brickData = BrickData(points: 4, brickRow: .three, color: GameManager.Color.Green, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1)
                     
                     break
                 case 4:
                     
-                    brick.brickData = BrickData(points: 4, brickRow: .Four, color: GameManager.Color.Yellow, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.33)
+                    brick.brickData = BrickData(points: 4, brickRow: .four, color: GameManager.Color.Yellow, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.33)
                     
                     break
                 case 5:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Five, color: GameManager.Color.Orange, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.66)
+                    brick.brickData = BrickData(points: 7, brickRow: .five, color: GameManager.Color.Orange, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 1.66)
                     
                     break
                 case 6:
                     
-                    brick.brickData = BrickData(points: 7, brickRow: .Six, color: GameManager.Color.Red, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 2)
+                    brick.brickData = BrickData(points: 7, brickRow: .six, color: GameManager.Color.Red, collectable: false, soundName: "bounce_\(i+2)", ballSpeedModifier: 2)
                     
                     break
                 default:

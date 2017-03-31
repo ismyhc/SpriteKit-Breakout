@@ -10,7 +10,7 @@ import SpriteKit
 
 extension SKLabelNode {
     
-    func adjustLabelFontSizeToFitHeight(height: CGFloat) {
+    func adjustLabelFontSizeToFitHeight(_ height: CGFloat) {
 
         let scalingFactor = floor(height / self.frame.height)
         self.fontSize *= scalingFactor
