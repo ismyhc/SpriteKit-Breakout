@@ -12,6 +12,7 @@ import SpriteKit
 class GameViewController: UIViewController {
 
     override func viewDidLoad() {
+        
         super.viewDidLoad()
 
         let scene = GameScene()
@@ -27,7 +28,7 @@ class GameViewController: UIViewController {
         skView.presentScene(scene)
         
     }
-
+    
     override var shouldAutorotate : Bool {
         return true
     }
@@ -35,14 +36,13 @@ class GameViewController: UIViewController {
     override var supportedInterfaceOrientations : UIInterfaceOrientationMask {
         return .portrait
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Release any cached data, images, etc that aren't in use.
-    }
-
+    
     override var prefersStatusBarHidden : Bool {
         return true
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+    }
+
 }

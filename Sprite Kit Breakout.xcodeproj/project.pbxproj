@@ -27,8 +27,6 @@
 		4751CB301D2DCAC900B262F9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 4751CB2E1D2DCAC900B262F9 /* LaunchScreen.storyboard */; };
 		4751CB381D2DCBC000B262F9 /* GameManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB371D2DCBC000B262F9 /* GameManager.swift */; };
 		4751CB3A1D2DE0ED00B262F9 /* BallNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4751CB391D2DE0ED00B262F9 /* BallNode.swift */; };
-		477995961E8EF025007E3549 /* RetroTextureKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 477995951E8EF025007E3549 /* RetroTextureKit.framework */; };
-		477995971E8EF025007E3549 /* RetroTextureKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 477995951E8EF025007E3549 /* RetroTextureKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -38,7 +36,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				477995971E8EF025007E3549 /* RetroTextureKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -68,7 +65,6 @@
 		4751CB311D2DCAC900B262F9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		4751CB371D2DCBC000B262F9 /* GameManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameManager.swift; sourceTree = "<group>"; };
 		4751CB391D2DE0ED00B262F9 /* BallNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BallNode.swift; sourceTree = "<group>"; };
-		477995951E8EF025007E3549 /* RetroTextureKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RetroTextureKit.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -76,7 +72,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				477995961E8EF025007E3549 /* RetroTextureKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -127,7 +122,6 @@
 		4751CB151D2DCAC900B262F9 = {
 			isa = PBXGroup;
 			children = (
-				477995951E8EF025007E3549 /* RetroTextureKit.framework */,
 				4751CB201D2DCAC900B262F9 /* Sprite Kit Breakout */,
 				4751CB1F1D2DCAC900B262F9 /* Products */,
 			);
@@ -187,8 +181,8 @@
 		4751CB161D2DCAC900B262F9 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastSwiftUpdateCheck = 0730;
-				LastUpgradeCheck = 0730;
+				LastSwiftUpdateCheck = 0830;
+				LastUpgradeCheck = 0830;
 				ORGANIZATIONNAME = "Jacob Davis";
 				TargetAttributes = {
 					4751CB1D1D2DCAC900B262F9 = {
@@ -290,8 +284,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -336,8 +332,10 @@
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_EMPTY_BODY = YES;
 				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -356,6 +354,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				TARGETED_DEVICE_FAMILY = "1,2";
 				VALIDATE_PRODUCT = YES;
 			};

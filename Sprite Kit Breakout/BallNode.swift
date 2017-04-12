@@ -8,7 +8,6 @@
 
 import SpriteKit
 
-
 class BallNode: SKSpriteNode {
     
     let moveSpeed: CGFloat = 200

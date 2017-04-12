@@ -8,7 +8,6 @@
 
 import SpriteKit
 import GameplayKit
-import RetroTextureKit
 
 enum GameState {
     case mainMenu,inGame,gameOver
@@ -16,7 +15,7 @@ enum GameState {
 
 class GameScene: SKScene {
     
-    fileprivate var lastUpdateTime: TimeInterval = 0
+    var lastUpdateTime: TimeInterval = 0
     
     var playerNode: SKSpriteNode!
     var brickNodes: [BrickNode]!
@@ -37,58 +36,11 @@ class GameScene: SKScene {
         
         self.backgroundColor = UIColor.black
         
-//        let pa = [
-//        
-//            [1, 1, 1, 1],
-//            [0, 1, 1, 0],
-//            [0, 1, 1, 0],
-//            [1, 1, 1, 1]
-//        ]
-//        
-//        let blah = [
-//
-//            "t": RetroTextureData(retroPixelArray: [
-//                
-//                [1, 1, 1, 1],
-//                [0, 1, 1, 0],
-//                [0, 1, 1, 0],
-//                [0, 1, 1, 0]
-//                
-//                ], retroPixelSize: 8),
-//
-//            "square": RetroTextureData(retroPixelArray: [
-//
-//                [1, 1, 1, 1],
-//                [1, 1, 1, 1],
-//                [1, 1, 1, 1],
-//                [1, 1, 1, 1]
-//                        
-//                ], retroPixelSize: 8),
-//            
-//            "tri": RetroTextureData(retroPixelArray: [
-//                
-//                [1, 1, 1, 1, 1],
-//                [0, 1, 1, 1, 0],
-//                [0, 0, 1, 0, 0]
-//                
-//            ], retroPixelSize: 8)
-//            
-//        ]
-        
-        //let tex = RetroTexture.createTextureAtlas(blah, view: view)
-        //let s = tex?.size()
-        
-//        let sprite = SKSpriteNode(texture: tex?.textureNamed("tri"))
-//        sprite.color = UIColor.red
-//        sprite.colorBlendFactor = 1
-//        sprite.position = view.center
-//        addChild(sprite)
-        
         // Create playing field
-        createPlayingField()
+        self.createPlayingField()
         
         // Create bricks
-        createPlaceBricks()
+        self.createAndPlaceBricks()
         
         // Create player
         let playerTexture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Player)
@@ -98,7 +50,7 @@ class GameScene: SKScene {
         self.playerNode.setScale(1 / UIScreen.main.scale)
         self.playerNode.position = CGPoint(x: view.center.x, y: (self.leftWallNode.position.y - self.leftWallNode.size.height) + (self.playerNode.size.height / 2))
         self.playerNode.zPosition = GameManager.ZOrders.Player
-        addChild(self.playerNode)
+        self.addChild(self.playerNode)
         
         // Create ball
         let ballTexture = GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.Ball)
@@ -112,7 +64,7 @@ class GameScene: SKScene {
         self.ballNode.move = vector2(0, -1)
         self.ballNode.actualMoveSpeed = self.ballNode.moveSpeed
         self.ballNode.zPosition = GameManager.ZOrders.Ball
-        addChild(self.ballNode)
+        self.addChild(self.ballNode)
         
         // score label
         self.scoreLabel = SKLabelNode(fontNamed: "PhaserBank")
@@ -122,7 +74,7 @@ class GameScene: SKScene {
         self.scoreLabel.horizontalAlignmentMode = .left
         self.scoreLabel.verticalAlignmentMode = .center
         self.scoreLabel.position = CGPoint(x: 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
-        addChild(self.scoreLabel)
+        self.addChild(self.scoreLabel)
         
         self.scoreLabel.adjustLabelFontSizeToFitHeight(self.view!.frame.height - self.topWallNode.position.y)
         
@@ -134,40 +86,40 @@ class GameScene: SKScene {
         self.livesLabel.horizontalAlignmentMode = .right
         self.livesLabel.verticalAlignmentMode = .center
         self.livesLabel.position = CGPoint(x: self.view!.frame.width - 12, y: self.view!.frame.height - (self.view!.frame.height - self.topWallNode.position.y) / 2)
-        addChild(self.livesLabel)
+        self.addChild(self.livesLabel)
         
         self.livesLabel.adjustLabelFontSizeToFitHeight(self.view!.frame.height - self.topWallNode.position.y)
         
         // start game
-        resetBallAndStart()
+        self.resetBallAndStart()
         
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        for touch in touches {
+        guard let touch = touches.first else {
+            return
+        }
+        
+        let previousLocation = touch.previousLocation(in: self)
+        let currentLocation = touch.location(in: self)
+        
+        self.playerNode.position.x += currentLocation.x - previousLocation.x
+        
+        // Constrain left side
+        if (self.playerNode.position.x - self.playerNode.size.width / 2) <= self.leftWallNode.size.width {
             
-            let previousLocation = touch.previousLocation(in: self)
-            let currentLocation = touch.location(in: self)
-            
-            self.playerNode.position.x += currentLocation.x - previousLocation.x
-            
-            // Constrain left side
-            if (self.playerNode.position.x - self.playerNode.size.width / 2) <= self.leftWallNode.size.width {
-                
-               self.playerNode.position.x = self.leftWallNode.size.width + (self.playerNode.size.width / 2)
-                
-            }
-            
-            // Constrain right side
-            if (self.playerNode.position.x + self.playerNode.size.width / 2) >= (self.view!.frame.width - self.leftWallNode.size.width) {
-                
-                self.playerNode.position.x = (self.view!.frame.width - self.leftWallNode.size.width) - (self.playerNode.size.width / 2)
-                
-            }
+            self.playerNode.position.x = self.leftWallNode.size.width + (self.playerNode.size.width / 2)
             
         }
         
+        // Constrain right side
+        if (self.playerNode.position.x + self.playerNode.size.width / 2) >= (self.view!.frame.width - self.leftWallNode.size.width) {
+            
+            self.playerNode.position.x = (self.view!.frame.width - self.leftWallNode.size.width) - (self.playerNode.size.width / 2)
+            
+        }
+
     }
     
     /////////////////////////////////////////////////////////
@@ -188,8 +140,10 @@ class GameScene: SKScene {
         if !isPaused {
             
             switch self.gameState {
+                
             case .mainMenu:
                 
+                // TODO
                 
                 break
                 
@@ -346,6 +300,7 @@ class GameScene: SKScene {
                 
             case .gameOver:
                 
+                // TODO
                 
                 break
                 
@@ -387,9 +342,9 @@ class GameScene: SKScene {
         self.scoreLabel.text = String(GameManager.sharedInstance.score)
         self.livesLabel.text = String(GameManager.sharedInstance.lives)
         
-        createPlaceBricks()
+        self.createAndPlaceBricks()
         
-        resetBallAndStart()
+        self.resetBallAndStart()
         
     }
     
@@ -406,7 +361,7 @@ class GameScene: SKScene {
         self.leftWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.leftWallNode.position = CGPoint(x: 0, y: y)
         self.leftWallNode.zPosition = GameManager.ZOrders.Wall
-        addChild(self.leftWallNode)
+        self.addChild(self.leftWallNode)
         
         self.rightWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.SideWall))
         self.rightWallNode.color = GameManager.Color.LightGray
@@ -415,7 +370,7 @@ class GameScene: SKScene {
         self.rightWallNode.anchorPoint = CGPoint(x: 1, y: 1)
         self.rightWallNode.position = CGPoint(x: self.view!.frame.width, y: y)
         self.rightWallNode.zPosition = GameManager.ZOrders.Wall
-        addChild(self.rightWallNode)
+        self.addChild(self.rightWallNode)
         
         self.topWallNode = SKSpriteNode(texture: GameManager.sharedInstance.atlas.textureNamed(GameManager.Names.TopWall))
         self.topWallNode.color = GameManager.Color.LightGray
@@ -424,17 +379,15 @@ class GameScene: SKScene {
         self.topWallNode.anchorPoint = CGPoint(x: 0, y: 1)
         self.topWallNode.position = CGPoint(x: 0, y: y)
         self.topWallNode.zPosition = GameManager.ZOrders.Wall
-        addChild(self.topWallNode)
+        self.addChild(self.topWallNode)
         
     }
     
-    func createPlaceBricks() {
+    func createAndPlaceBricks() {
         
         
         // cleanup any brick nodes left
-        self.enumerateChildNodes(withName: GameManager.Names.Brick, using: {
-            
-            node, stop in
+        self.enumerateChildNodes(withName: GameManager.Names.Brick, using: { node, stop in
             
             node.removeFromParent()
             

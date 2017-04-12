@@ -34,8 +34,6 @@ class GameManager {
         self.score = 0
         self.lives = 3
         
-        // Preload sound
-        SKAction.playSoundFileNamed("ball_bounce", waitForCompletion: false)
         self.prepareSounds()
         
         self.createTextureAtlas()

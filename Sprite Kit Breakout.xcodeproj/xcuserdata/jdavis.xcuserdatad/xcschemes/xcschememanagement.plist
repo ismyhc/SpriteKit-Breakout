@@ -4,7 +4,7 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
-		<key>Sprite Kit Breakout.xcscheme</key>
+		<key>Sprite Kit Breakout.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
 			<integer>0</integer>
@@ -13,6 +13,21 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>4751CB1D1D2DCAC900B262F9</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47AC31181E8FDF8800CA4D7D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47AC31391E8FE04800CA4D7D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>47AC31521E8FE29500CA4D7D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
